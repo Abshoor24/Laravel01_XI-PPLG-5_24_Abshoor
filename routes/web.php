@@ -3,11 +3,17 @@
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\LandingPage;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+// Route untuk halaman utama
+Route::get('/', [LandingPage::class, 'index'])->name('landing');
 
+// Route group untuk admin
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('admin.dashboard');
+});
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
