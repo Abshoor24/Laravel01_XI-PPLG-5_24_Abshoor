@@ -11,8 +11,8 @@ use App\Http\Controllers\StudentController;
 Route::get('/', [LandingPage::class, 'index'])->name('landing');
 
 // Route group untuk admin
-Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('students', StudentController::class);
 });
