@@ -5,18 +5,23 @@ use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\LandingPage;
+use App\Http\Controllers\StudentController;
 
 // Route untuk halaman utama
 Route::get('/', [LandingPage::class, 'index'])->name('landing');
 
 // Route group untuk admin
 Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('admin.dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+    Route::resource('students', StudentController::class);
 });
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
